@@ -1,0 +1,22 @@
+{
+  "name": "nwjs-cvdata",
+  "version": "0.1.0",
+  "main": "index.html",
+  "window": {
+    "toolbar": true,
+    "resizable": true,
+    "fullscreen": false,
+    "width": 800,
+    "height": 600
+  },
+  "dependencies": {
+    "node-uuid": "^1.4.7",
+    "nw": "^0.12.3",
+    "q": "^1.4.1",
+    "underscore": "^1.4.4"
+  },
+  "scripts": {
+    "start": "nw ."
+  },
+  "js-flags": "--harmony-collections"
+}

@@ -1,0 +1,159 @@
+html, body {
+    font-family: Roboto;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+* {
+    -webkit-user-select: none;
+}
+h1, h2, h3, h4 {
+    cursor: default;
+}
+
+#toolbar {
+    height: 30px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #f5f6f7;
+    border-top: 1px solid #dadbdc;
+    border-bottom: 1px solid #dadbdc;
+    z-index: 10;
+    padding: 10px;
+    margin: 0;
+    text-align: right;
+}
+#toolbar button {
+    line-height: 28px;
+    margin: 0;
+    padding: 0 20px;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+#toolbar .loadsave-btn {
+    height: 1px;
+    width: 1px;
+    float: left;
+    visibility: hidden;
+}
+#newJob,
+#newProject {
+    float: left;
+    margin-right: 5px;
+    display: inline-block;
+}
+
+#listJobs {
+    position: absolute;
+    left: 0;
+    top: 50px;
+    bottom: 0;
+    width: 30%;
+    overflow-y: scroll;
+}
+
+#listJobs h2 {
+    font-size: 1em;
+    padding: 5px 15px;
+    margin: 10px 0 0;
+    line-height: 30px;
+}
+
+#listJobs ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#listJobs ul li {
+    padding: 5px 15px 5px 35px;
+    line-height: 20px;
+    cursor: pointer;
+}
+
+#listJobs ul li:hover {
+    background-color: #eee;
+}
+
+#listJobs ul li span.job-title {
+    display: block;
+    margin-top: 0px;
+    font-size: 0.9em;
+    color: #aaa;
+}
+
+
+
+#editJob {
+    position: absolute;
+    left: 30%;
+    top: 50px;
+    bottom: 0;
+    right: 0;
+    overflow-y: scroll;
+}
+
+#editJob h1 {
+    margin: 10px;
+}
+
+#editJob div.edit-job-form {
+    padding: 10px;
+}
+
+#editJob div.column {
+    width: 50%;
+    float: left;
+    display: inline-block;
+}
+
+#editJob div.edit-job-form div.form-field {
+    padding: 10px;
+    display: inline-block;
+    float: left;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+#editJob div.edit-job-form div.text-field,
+#editJob div.edit-job-form div.projects-section {
+    width: 100%;
+}
+
+#editJob div.edit-job-form div.input-field {
+
+}
+
+#editJob div.edit-job-form div.form-field label {
+    display: block;
+    font-size: 0.9em;
+    color: #888;
+    margin-bottom: 5px;
+}
+
+
+#editJob div.edit-job-form div.input-field input {
+    width: 100%;
+}
+
+
+#editJob div.edit-job-form div.text-field textarea {
+    width: 100%;
+}
+
+
+
+#editJob div.edit-job-form div.list-field textarea {
+    width: 100%;
+}
+
+
+
+#editJob div.edit-job-form div.project-placeholder {
+    width: 100%;
+    padding: 40px 0;
+    border: 1px dashed #ccc;
+    text-align: center;
+}

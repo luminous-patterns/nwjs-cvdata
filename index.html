@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Cal Milne's NWJS POC</title>
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700italic,700,900,900italic" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body ng-app="cvDataApp">
+
+        <div id="toolbar" ng-controller="ToolbarController">
+
+            <input class="loadsave-btn save-btn" id="saveAs" type="file" nwsaveas="cv.json">
+            <input class="loadsave-btn load-btn" id="loadFile" type="file" accept=".json">
+            <button id="startFresh" ng-click="startFresh()">Start Fresh</button>
+            <button id="loadButton" ng-click="load()">Load</button>
+            <button id="saveAsButton" ng-click="saveAs()">Save as ...</button>
+            <button id="newJob" ng-click="createJob()">+ New job</button>
+            <button id="newProject" ng-click="createProject()">+ New project</button>
+            
+        </div>
+
+        <div id="listJobs" ng-controller="JobNavController">
+
+            <h2>Jobs</h2>
+            <ul class="job-nav-list job-list">
+                <li class="single-list-item single-job" 
+                    ng-repeat="job in jobs"
+                    ng-click="editJob(job)">
+                    {{ job.companyName }}
+                    <span class="job-title">{{ job.title }}</span>
+                </li>
+            </ul>
+
+            <h2>Projects</h2>
+            <ul class="job-nav-list project-list">
+                <li class="single-list-item single-project" 
+                    ng-repeat="project in projects"
+                    ng-click="editProject(project)">
+                    {{ project.name }}
+                </li>
+            </ul>
+
+        </div>
+
+        <div id="editJob" ng-controller="EditJobController">
+
+            <div class="edit-job-form" ng-if="jobSelected">
+
+                <h1>Edit Job</h1>
+
+                <div class="column">
+
+                    <div class="form-field input-field">
+                        <label>Company Name</label>
+                        <input ng-model="job.companyName">
+                    </div>
+
+                    <div class="form-field input-field">
+                        <label>Job Title</label>
+                        <input ng-model="job.title">
+                    </div>
+
+                    <div class="form-field input-field">
+                        <label>Start Date</label>
+                        <input type="date" ng-model="job.startDate">
+                    </div>
+
+                    <div class="form-field input-field">
+                        <label>End Date</label>
+                        <input type="date" ng-model="job.endDate">
+                    </div>
+
+                </div>
+
+                <div class="column">
+
+                    <div class="form-field list-field">
+                        <simple-object-list
+                            list-title="Skills"
+                            list-item-repository="allSkills"
+                            ng-model="job.skills">
+                        </simple-object-list>
+                    </div>
+
+                    <div class="form-field list-field">
+                        <simple-object-list
+                            list-title="Technologies"
+                            list-item-repository="allTechnologies"
+                            ng-model="job.technologies">
+                        </simple-object-list>
+                    </div>
+
+                </div>
+
+                <div class="form-field text-field">
+                    <label>Details</label>
+                    <textarea ng-model="job.details" rows="10"></textarea>
+                </div>
+
+            </div>
+
+            <div class="edit-job-form" ng-if="projectSelected">
+
+                <h1>Edit Project</h1>
+
+                <div class="column">
+
+                    <div class="form-field input-field">
+                        <label>Job</label>
+                        <select style="width: 100%"
+                            ng-model="project.job">
+                            <option ng-repeat="job in jobs" 
+                                value="{{ job }}">
+                                {{ getJobDescription(job) }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-field input-field">
+                        <label>Project name</label>
+                        <input ng-model="project.name">
+                    </div>
+
+                    <div class="form-field input-field">
+                        <label>Product</label>
+                        <input ng-model="project.product">
+                    </div>
+
+                    <div class="form-field input-field">
+                        <label>My role</label>
+                        <input ng-model="project.myRole">
+                    </div>
+
+                    <div class="form-field input-field">
+                        <label>Team size</label>
+                        <input ng-model="project.teamSize">
+                    </div>
+
+                </div>
+
+                <div class="column">
+
+                    <div class="form-field list-field">
+                        <simple-object-list
+                            list-title="Skills"
+                            list-item-repository="allSkills"
+                            ng-model="project.skills">
+                        </simple-object-list>
+                    </div>
+
+                    <div class="form-field list-field">
+                        <simple-object-list
+                            list-title="Technologies"
+                            list-item-repository="allTechnologies"
+                            ng-model="project.technologies">
+                        </simple-object-list>
+                    </div>
+
+                </div>
+
+                <div class="form-field text-field">
+                    <label>Details</label>
+                    <textarea ng-model="job.details" rows="10"></textarea>
+                </div>
+
+            </div>
+
+        </div>
+        
+        <!-- Node.js core -->
+        <script src="src/node/index.js"></script>
+        <script>(function () {'use strict';
+
+            var nodeApp = process.nodeApp;
+
+            nodeApp
+                .addVendorLibraries([
+                    'angular/angular.min.js',
+                ])
+                .addSrcFiles([
+                    'angular/app.js',
+                    'angular/directives/simpleObjectList.js',
+                ])
+                .init();
+
+        })();</script>
+
+        <script type="text/ng-template" id="views/simpleObjectListController.html">
+            <label ng-bind="title"></label>
+            <ul>
+                <li ng-repeat="model in models">{{ model.label }}</li>
+            </ul>
+            <form>
+                <select ng-model="addListItem">
+                    <option ng-repeat="entityId in repository" 
+                        value="{{ entityId }}"
+                        ng-disabled="models.indexOf(getEntity(entityId)) > -1">
+                        {{ getEntityDescription(entityId) }}
+                    </option>
+                    <option value="custom">Create a new one...</option>
+                </select>
+                <input ng-model="newItemLabel" ng-show="addListItem === 'custom'">
+                <button ng-click="createNewItem()"
+                    ng-show="addListItem === 'custom'">
+                    Create
+                </button>
+            </form>
+        </script>
+
+    </body>
+</html>
